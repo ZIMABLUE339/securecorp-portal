@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureCorp - Auditor Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="main-wrapper">
+        <section class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-shield-virus"></i>
+                <h2>SECURE<span>CORP</span></h2>
+            </div>
+            
+            <div class="project-info">
+                <h3><i class="fa-solid fa-circle-info"></i> El Proyecto</h3>
+                <p>Simulación de <strong>Auditoría Ofensiva</strong>. El servidor ha sido comprometido por fallos críticos.</p>
+                <p>Tu misión es registrar las <strong>11 llaves (flags)</strong> obtenidas. Ingresar una llave válida desencriptará la pista de tu siguiente objetivo.</p>
+            </div>
+
+            <div class="mission-status">
+                <h3><i class="fa-solid fa-list-check"></i> Progreso</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: {{ (solved|length / 11) * 100 }}%;"></div>
+                </div>
+                <p style="margin-top: 10px; font-weight: bold; color: #00ff41;">{{ solved|length }} / 11 Capturadas</p>
+            </div>
+
+            <a href="{{ url_for('reset') }}" class="reset-btn"><i class="fa-solid fa-power-off"></i> Limpiar Sistema</a>
+        </section>
+
+        <section class="workspace">
+            <div class="terminal">
+                <div class="terminal-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <p>securecorp_dashboard.sh</p>
+                </div>
+                
+                <div class="terminal-body">
+                    {% if mensaje %}
+                    <div class="pista-display {{ clase }}">
+                        <p><i class="fa-solid fa-terminal"></i> {{ mensaje }}</p>
+                    </div>
+                    {% else %}
+                    <div class="pista-display info">
+                        <p><i class="fa-solid fa-terminal"></i> >_ Interfaz iniciada. Esperando ingreso de payloads...</p>
+                    </div>
+                    {% endif %}
+
+                    <div class="flags-grid">
+                        {% for f in flags %}
+                            {% set is_solved = f.id in solved %}
+                            {% set is_active = (f.id == 1) or ((f.id - 1) in solved) %}
+
+                            <div class="flag-card {% if is_solved %}solved-card{% endif %}">
+                                <div class="flag-header">
+                                    <h4>{{ f.title }}</h4>
+                                    {% if is_solved %}
+                                        <span class="badge green">COMPROMETIDO</span>
+                                    {% else %}
+                                        <span class="badge red">VULNERABLE</span>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="flag-content">
+                                    {% if is_solved %}
+                                        <p class="success-text"><i class="fa-solid fa-unlock"></i> <strong>Llave verificada:</strong> {{ f.flag }}</p>
+                                    {% else %}
+                                        {% if is_active %}
+                                            <p class="hint-text"><i class="fa-solid fa-eye"></i> <strong>PISTA:</strong> {{ f.hint }}</p>
+                                        {% else %}
+                                            <p class="locked-text"><i class="fa-solid fa-lock"></i> <strong>PISTA:</strong> [DATOS ENCRIPTADOS] Requiere descifrar la vulnerabilidad anterior.</p>
+                                        {% endif %}
+                                        
+                                        <form method="POST" class="flag-form-inline">
+                                            <input type="text" name="flag" placeholder="CORP{...}" required autocomplete="off">
+                                            <button type="submit">INYECTAR</button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

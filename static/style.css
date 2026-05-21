@@ -1,0 +1,110 @@
+:root {
+    --bg-dark: #050505;
+    --bg-panel: #0f0f0f;
+    --accent: #00ff41;
+    --error: #ff4141;
+    --text: #daffde;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    overflow: hidden;
+}
+
+.main-wrapper { display: flex; height: 100vh; }
+
+/* Sidebar Estilo Hacker */
+.sidebar {
+    width: 350px; background: var(--bg-panel); padding: 40px;
+    border-right: 1px solid #222; display: flex; flex-direction: column; gap: 30px;
+}
+
+.logo h2 { margin: 0; font-size: 24px; letter-spacing: 2px; }
+.logo span { color: #fff; }
+
+.project-info h3, .mission-status h3 { font-size: 18px; color: var(--accent); margin-bottom: 10px; }
+.project-info p { font-size: 14px; line-height: 1.6; color: #888; }
+
+.progress-bar-container { width: 100%; background: #222; height: 10px; border-radius: 5px; overflow: hidden; }
+.progress-bar { height: 100%; background: var(--accent); transition: width 0.5s ease; }
+
+.reset-btn {
+    margin-top: auto; text-align: center; color: #888; text-decoration: none;
+    font-size: 14px; padding: 15px; border: 1px solid #333; transition: 0.3s;
+}
+.reset-btn:hover { background: #333; color: #fff; border-color: #fff; }
+
+/* Workspace & Terminal */
+.workspace {
+    flex-grow: 1; display: flex; justify-content: center; align-items: center;
+    padding: 20px; background: radial-gradient(circle, #111 0%, #050505 100%);
+}
+
+.terminal {
+    width: 100%; max-width: 900px; background: #000; border-radius: 8px;
+    border: 1px solid #333; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    display: flex; flex-direction: column; max-height: 95vh;
+}
+
+.terminal-header {
+    background: #1a1a1a; padding: 10px 20px; display: flex; align-items: center;
+    gap: 8px; border-bottom: 1px solid #333;
+}
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.red { background: #ff5f56; }
+.yellow { background: #ffbd2e; }
+.green { background: #27c93f; }
+.terminal-header p { margin: 0 0 0 15px; font-size: 12px; font-family: monospace; color: #666; }
+
+/* Cuerpo scrolleable de la terminal */
+.terminal-body {
+    padding: 30px; overflow-y: auto;
+}
+.terminal-body::-webkit-scrollbar { width: 8px; }
+.terminal-body::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px;}
+.terminal-body::-webkit-scrollbar-track { background: #111; }
+
+.pista-display {
+    padding: 15px; border-radius: 4px; font-family: 'Courier New', monospace;
+    margin-bottom: 25px; border-left: 4px solid var(--accent); position: sticky; top: 0; z-index: 10;
+}
+.info { background: #111; }
+.success { background: #0a2412; color: #00ff41; }
+.error { background: #240a0a; color: var(--error); border-left-color: var(--error); }
+
+/* Grid de las 11 Flags */
+.flags-grid { display: flex; flex-direction: column; gap: 20px; }
+
+.flag-card {
+    background: #0f0f0f; border: 1px solid #333; border-radius: 6px; padding: 20px;
+    transition: 0.3s;
+}
+.solved-card { border-color: var(--accent); background: #051408; }
+
+.flag-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 10px; margin-bottom: 15px; }
+.flag-header h4 { margin: 0; color: #fff; font-size: 16px; }
+
+.badge { font-size: 10px; padding: 3px 8px; border-radius: 4px; font-weight: bold; letter-spacing: 1px; }
+.badge.red { background: #3d0000; color: var(--error); border: 1px solid var(--error); }
+.badge.green { background: #003d10; color: var(--accent); border: 1px solid var(--accent); }
+
+.flag-content p { font-family: 'Courier New', monospace; font-size: 14px; margin: 0 0 15px 0; }
+.success-text { color: var(--accent); }
+.hint-text { color: #fff; }
+.locked-text { color: #555; }
+
+.flag-form-inline { display: flex; gap: 10px; }
+.flag-form-inline input {
+    flex-grow: 1; background: #000; border: 1px solid #333; padding: 10px;
+    color: var(--accent); font-family: monospace;
+}
+.flag-form-inline input:focus { outline: none; border-color: var(--accent); }
+
+.flag-form-inline button {
+    background: #333; color: #fff; border: 1px solid #444; padding: 0 20px;
+    font-weight: bold; cursor: pointer; transition: 0.3s;
+}
+.flag-form-inline button:hover { background: var(--accent); color: #000; border-color: var(--accent); }
